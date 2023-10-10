@@ -1,0 +1,49 @@
+<div>
+    <nav class="d-flex justify-content-end">
+        
+        <a routerLink="/listPhones" class="btn btn-primary btn-sm">Back to Phones</a>
+        <span class="mx-2"></span>
+        
+    </nav>
+  </div>
+  <div class="container">
+    <h3>Add Flight</h3>
+    <form (ngSubmit)="phoneForm.form.valid && add()" #phoneForm="ngForm" >
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="phoneRequest.name" class="form-control" #name="ngModel" [ngClass]="{'is-invalid':phoneForm.submitted && name.invalid}" required>
+            <div class="invalid-feedback" *ngIf="phoneForm.submitted && name.invalid">
+                <p *ngIf="name.errors && name.errors['required']" class="text-danger">Name is Required</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="disc">Disc:</label>
+            <input type="number" id="disc" name="disc" [(ngModel)]="phoneRequest.disc" class="form-control" #disc="ngModel" [ngClass]="{'is-invalid':phoneForm.submitted && disc.invalid}" required>
+            <div class="invalid-feedback" *ngIf="phoneForm.submitted && disc.invalid">
+                <p *ngIf="disc.errors && disc.errors['required']" class="text-danger">Discount is Required</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="descr">Description:</label>
+            <input type="text" id="descr" name="descr" [(ngModel)]="phoneRequest.descr" class="form-control" #descr="ngModel" [ngClass]="{'is-invalid':phoneForm.submitted && descr.invalid}" required>
+            <div class="invalid-feedback" *ngIf="phoneForm.submitted && descr.invalid">
+                <p *ngIf="descr.errors && descr.errors['required']" class="text-danger">Description is Required</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="price">price:</label>
+            <input type="number" id="price" name="price" [(ngModel)]="phoneRequest.price" class="form-control" #price="ngModel" [ngClass]="{'is-invalid':phoneForm.submitted && price.invalid}" required>
+            <div class="invalid-feedback" *ngIf="phoneForm.submitted && price.invalid">
+                <p *ngIf="price.errors && price.errors['required']" class="text-danger">Price is Required</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="imgUrl">Image Url:</label>
+            <input type="url" id="imgUrl" name="imgUrl" [(ngModel)]="phoneRequest.imgUrl" class="form-control" #imgUrl="ngModel" [ngClass]="{'is-invalid':phoneForm.submitted && imgUrl.invalid}" required>
+            <div class="invalid-feedback" *ngIf="phoneForm.submitted && imgUrl.invalid">
+                <p *ngIf="imgUrl.errors && imgUrl.errors['required']" class="text-danger">imgUrl is Required</p>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>

@@ -1,15 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PhonesComponent } from './phones/phones.component';
+import { AddPhoneComponent } from './add-phone/add-phone.component';
+import { UpdatePhoneComponent } from './update-phone/update-phone.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PhonesComponent,
+    AddPhoneComponent,
+    UpdatePhoneComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],

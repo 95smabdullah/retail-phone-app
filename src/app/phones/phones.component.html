@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Use CSS to control the layout */
+        .container {
+            display: flex; /* Use flexbox layout */
+            align-items: flex-start; /* Vertically align items at the start */
+            gap: 20px; /* Add spacing between images and text */
+            flex-wrap: nowrap;
+        }
+
+        /* Style the individual product items */
+        .phone {
+            display: flex; /* Use flexbox layout for each product */
+            align-items: flex-start; /* Vertically align items at the start */
+        }
+
+        /* Add margin between the image and text */
+        img {
+            margin-right: 5px; /* Adjust the margin as needed */
+            max-width: 100px; /* Limit the maximum width of images */
+            max-height: 100px; /* Limit the maximum height of images */
+        }
+
+        /* Style the text paragraphs */
+        .text {
+            margin: 0; /* Remove default margin */
+        }
+        .strikethrough {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <nav class="d-flex justify-content-end">
+            
+            <a routerLink="/add" class="btn btn-primary btn-sm">Add</a>
+            <span class="mx-2"></span>
+            
+        </nav>
+      </div>
+        <div *ngFor="let phone of phones" class="phone">
+            <div class="container">
+            <img [src]="phone.imgUrl" alt="{{phone.name}}">
+            <div>
+                <p class="text">{{ phone.name | uppercase}}</p>
+                <p class="strikethrough">{{ phone.price | currency }}</p>
+                <p class="text">{{ phone.disc }}% off {{phone.price - phone.price*phone.disc/100| currency }}</p>
+                <p class="text">{{ phone.descr }}</p>
+                <button class="btn btn-danger" (click)="delete(phone.id)">Delete</button>
+                <span class="mx-2"></span>
+                <button class="btn btn-primary" (click)="update(phone.id)">Update</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
