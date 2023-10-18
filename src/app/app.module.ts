@@ -8,21 +8,26 @@ import { AppComponent } from './app.component';
 import { PhonesComponent } from './phones/phones.component';
 import { AddPhoneComponent } from './add-phone/add-phone.component';
 import { UpdatePhoneComponent } from './update-phone/update-phone.component';
+import { HomeComponent } from './home/home.component';
+import { CartComponent } from './cart/cart.component';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     PhonesComponent,
     AddPhoneComponent,
-    UpdatePhoneComponent
+    UpdatePhoneComponent,
+    HomeComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

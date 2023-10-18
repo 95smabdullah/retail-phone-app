@@ -1,0 +1,27 @@
+<div class="container">
+    
+    <h3>Enter Login Credentials</h3>
+    <form #loginForm="ngForm" (ngSubmit)="loginForm.form.valid ? (loginMode ? login() : register()) : null">
+        <div class="form-group">
+            <label for="user">Username:</label>
+            <input type="text" id="user" name="user" [(ngModel)]="userRequest.user" class="form-control"
+            #user="ngModel" [ngClass]="{'is-invalid': loginForm.submitted && user.invalid}" required>
+            <div class="invalid-feedback" *ngIf="loginForm.submitted && user.invalid">
+                <p *ngIf="user.errors && user.errors['required']" class="text-danger">Username is Required</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="userRequest.password" class="form-control"
+            #password="ngModel" [ngClass]="{'is-invalid': loginForm.submitted && password.invalid}" minlength="4" required>
+            <div class="invalid-feedback" *ngIf="loginForm.submitted && password.invalid">
+                <div *ngIf="password.errors && password.errors['required']" class="text-danger">Password is Required</div>
+                <div *ngIf="password.errors && password.errors['minlength']" class="text-danger">Must be 4 characters</div>
+            </div>
+         </div>
+        <button type="submit" class="btn btn-primary">{{ loginMode ? 'Login' : 'Register' }}</button>
+        <div class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <span class="mx-2"></span>
+        <button type="button" class="btn btn-secondary" (click)="toggleLoginMode()">{{ loginMode ? 'Switch to Register' : 'Switch to Login' }}</button>
+    </form>
+</div>

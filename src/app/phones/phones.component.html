@@ -3,22 +3,47 @@
 <head>
     <style>
         /* Use CSS to control the layout */
+        .filter {
+            display: flex; /* Use flexbox layout for each product */
+            align-items: center; /* Vertically align items at the start */
+            flex-direction: row; /* Display items vertically */
+        }
+        input[type="checkbox"] {
+    margin-right: 10px; /* Adjust the margin as needed */
+        }
+        .auto-width {
+            width:auto;
+
+        }
+        .column {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+
+        }
+        .row {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: row;
+
+        }
         .container {
             display: flex; /* Use flexbox layout */
-            align-items: flex-start; /* Vertically align items at the start */
+            align-items: flex-start; /*Vertically align items at the start */
+            flex-direction: row;
+            margin-left: 10px;
             gap: 20px; /* Add spacing between images and text */
-            flex-wrap: nowrap;
         }
 
         /* Style the individual product items */
         .phone {
             display: flex; /* Use flexbox layout for each product */
             align-items: flex-start; /* Vertically align items at the start */
+            flex-direction: row; /* Display items vertically */
         }
 
         /* Add margin between the image and text */
         img {
-            margin-right: 5px; /* Adjust the margin as needed */
             max-width: 100px; /* Limit the maximum width of images */
             max-height: 100px; /* Limit the maximum height of images */
         }
@@ -35,25 +60,49 @@
 <body>
     <div>
         <nav class="d-flex justify-content-end">
-            
-            <a routerLink="/add" class="btn btn-primary btn-sm">Add</a>
-            <span class="mx-2"></span>
-            
+          <a routerLink="/add" class="btn btn-primary btn-sm">Add</a>
+          <span class="mx-2"></span>
+          <a routerLink="/seeCart" class="btn btn-primary btn-sm">Your Cart</a>
+          <span class="mx-2"></span> 
+          <a routerLink="/home" class="btn btn-danger btn-sm">Logout</a>
+          <span class="mx-2"></span>
         </nav>
-      </div>
-        <div *ngFor="let phone of phones" class="phone">
-            <div class="container">
-            <img [src]="phone.imgUrl" alt="{{phone.name}}">
-            <div>
-                <p class="text">{{ phone.name | uppercase}}</p>
-                <p class="strikethrough">{{ phone.price | currency }}</p>
-                <p class="text">{{ phone.disc }}% off {{phone.price - phone.price*phone.disc/100| currency }}</p>
-                <p class="text">{{ phone.descr }}</p>
-                <button class="btn btn-danger" (click)="delete(phone.id)">Delete</button>
-                <span class="mx-2"></span>
-                <button class="btn btn-primary" (click)="update(phone.id)">Update</button>
+    </div>
+      
+    <div class="container">
+        <!-- Filter Options on the Left -->
+        <div class="column">
+            <div *ngFor="let phone of phones; let i = index" class="filter">
+                <input type="checkbox" [(ngModel)]="phoneNames[i]" id="phoneCheckbox{{i}}" class="cb">
+                <label for="phoneCheckbox{{i}}">{{ phone.name }}</label>
+              </div>
+          <!-- <input [(ngModel)]="filterName" placeholder="Filter by name" class="auto-width"> -->
+          <input [(ngModel)]="filterPriceMin" type="number" placeholder="Min Price" class="auto-width">
+          <input [(ngModel)]="filterPriceMax" type="number" placeholder="Max Price" class="auto-width">
+          <button (click)="applyFilter()">Apply Filter</button>
+        </div>
+      
+        <!-- Phone List Displayed Vertically Without Wrapping -->
+        <div class="column">
+            <div *ngFor="let phone of phones; let i = index" class="phone">
+                <ng-container *ngIf="filter(phone, i)">
+                <input type="checkbox" [(ngModel)]="selectedPhones[i]">
+                <img [src]="phone.imgUrl" alt="{{ phone.name }}" class="img">
+                <div>
+                    <p class="text">{{ phone.name | uppercase }}</p>
+                    <p class="strikethrough">{{ phone.price | currency }}</p>
+                    <p class="text">{{ phone.disc }}% off {{ phone.price - (phone.price * phone.disc / 100) | currency }}</p>
+                    <p class="text">{{ phone.descr }}</p>
+                    <button class="btn btn-danger" (click)="delete(phone.id)">Delete</button>
+                    <span class="mx-2"></span>
+                    <button class="btn btn-primary" (click)="update(phone.id)">Update</button>
+                    <span class="mx-2"></span>
+                    <button class="btn btn-primary" (click)="addToCart(phone.id)" [disabled]="!selectedPhones[i]">Add to cart</button>
+                </div>
+            </ng-container>
             </div>
         </div>
     </div>
+      
 </body>
 </html>
